@@ -1,1 +1,1 @@
-## Write algorithm in rust!
+## Write algorithms in Rust!
