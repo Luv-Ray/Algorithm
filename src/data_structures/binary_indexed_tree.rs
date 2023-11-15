@@ -21,6 +21,20 @@ impl<T: AddAssign + SubAssign + Copy> BinaryIndexedTree<T> {
         BinaryIndexedTree { tree, len }
     }
 
+    /// # Examples
+    /// 
+    /// ```
+    /// use algorithm::data_structures::BinaryIndexedTree;
+    /// 
+    /// let vec = vec![2; 10];
+    /// let mut t = BinaryIndexedTree::new(vec);
+    /// 
+    /// t.edit(0, 2);
+    /// assert!(t.query_one(0) == 4);
+    /// 
+    /// t.edit(0, -2);
+    /// assert!(t.query_one(9) == 20);
+    /// ```
     pub fn edit(&mut self, mut index: usize, delta: T) {
         while index < self.len {
             self.tree[index] += delta;
@@ -32,6 +46,17 @@ impl<T: AddAssign + SubAssign + Copy> BinaryIndexedTree<T> {
         }
     }
 
+    /// # Examples
+    /// 
+    /// ```
+    /// use algorithm::data_structures::BinaryIndexedTree;
+    /// 
+    /// let vec = vec![2; 10];
+    /// let t = BinaryIndexedTree::new(vec);
+    /// 
+    /// assert!(t.query_one(0) == 2);
+    /// assert!(t.query_one(9) == 20);
+    /// ```
     pub fn query_one(&self, mut index: usize) -> T {
         let mut ans = self.tree[index];
         while index > 0 {
@@ -41,6 +66,17 @@ impl<T: AddAssign + SubAssign + Copy> BinaryIndexedTree<T> {
         ans
     }
 
+    /// # Examples
+    /// 
+    /// ```
+    /// use algorithm::data_structures::BinaryIndexedTree;
+    /// 
+    /// let vec = vec![2; 10];
+    /// let t = BinaryIndexedTree::new(vec);
+    /// 
+    /// assert!(t.query_range(0, 0) == 0);
+    /// assert!(t.query_range(0, 5) == 10);
+    /// ```
     pub fn query_range(&self, index_left: usize, index_right: usize) -> T {
         let mut ans = self.query_one(index_right);
         ans -= self.query_one(index_left);
